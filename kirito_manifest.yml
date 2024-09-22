@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kirito-namespace
+  labels:
+    name: kirito-namespace
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: kirito-service
+  namespace: kirito-namespace
+  labels: 
+    app: kirito-service
+spec:
+  type: NodePort
+  ports:
+    - nodePort: 30000
+      port: 8080
+      targetPort: 8080
+  selector:
+    run: kirito
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kirito-deployment
+  namespace: kirito-namespace
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      run: kirito
+  minReadySeconds: 30
+  template:
+    metadata:
+      labels:
+        run: kirito
+    spec:
+      containers:
+      - name: kirito-deployment
+        image: aan-kirito:latest
+        ports:
+           - containerPort: 8080
+
+        
+
