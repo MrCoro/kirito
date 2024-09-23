@@ -43,7 +43,7 @@ spec:
     spec:
       containers:
       - name: kirito-deployment
-        image: aan-kirito:latest
+        image: antonykunaifi/aan-kirito:latest
         ports:
            - containerPort: 8080
 
